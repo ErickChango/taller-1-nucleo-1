@@ -9,18 +9,18 @@
 <body>
     <div class="container">
         <nav class="navbar">
-            <a th:href="@{/}">🏠 Inicio</a>
-            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
-            <a th:href="@{/huespedes}">👤 Huéspedes</a>
-            <a th:href="@{/reservas}">📅 Reservas</a>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/habitaciones}">Habitaciones</a>
+            <a th:href="@{/huespedes}">Huéspedes</a>
+            <a th:href="@{/reservas}">Reservas</a>
         </nav>
 
         <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
 
-        <h1>👤 Gestión de Huéspedes</h1>
+        <h1>Gestión de Huéspedes</h1>
         
         <div style="margin-bottom: 20px;">
-            <a th:href="@{/huespedes/nuevo}" class="btn btn-primary">➕ Nuevo Huésped</a>
+            <a th:href="@{/huespedes/nuevo}" class="btn btn-primary">Nuevo Huésped</a>
         </div>
 
         <table>
@@ -42,10 +42,10 @@
                     <td th:text="${huesped.telefono}">555-1234</td>
                     <td th:text="${huesped.nacionalidad}">Mexicana</td>
                     <td class="acciones">
-                        <a th:href="@{/huespedes/editar/{id}(id=${huesped.id})}" class="btn btn-warning">✏️ Editar</a>
+                        <a th:href="@{/huespedes/editar/{id}(id=${huesped.id})}" class="btn btn-warning">Editar</a>
                         <a th:href="@{/huespedes/eliminar/{id}(id=${huesped.id})}" 
                            class="btn btn-danger"
-                           onclick="return confirm('¿Está seguro de eliminar este huésped?')">🗑️ Eliminar</a>
+                           onclick="return confirm('¿Está seguro de eliminar este huésped?')">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

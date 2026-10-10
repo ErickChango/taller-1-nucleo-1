@@ -9,19 +9,19 @@
 <body>
     <div class="container">
         <nav class="navbar">
-            <a th:href="@{/}">🏠 Inicio</a>
-            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
-            <a th:href="@{/huespedes}">👤 Huéspedes</a>
-            <a th:href="@{/reservas}">📅 Reservas</a>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/habitaciones}">Habitaciones</a>
+            <a th:href="@{/huespedes}">Huéspedes</a>
+            <a th:href="@{/reservas}">Reservas</a>
         </nav>
 
         <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
         <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
 
-        <h1>📅 Gestión de Reservas</h1>
+        <h1>Gestión de Reservas</h1>
         
         <div style="margin-bottom: 20px;">
-            <a th:href="@{/reservas/nuevo}" class="btn btn-primary">➕ Nueva Reserva</a>
+            <a th:href="@{/reservas/nuevo}" class="btn btn-primary">Nueva Reserva</a>
         </div>
 
         <table>
@@ -51,24 +51,24 @@
                         <span th:class="'badge badge-' + ${#strings.toLowerCase(reserva.estado)}" th:text="${reserva.estado}">Estado</span>
                     </td>
                     <td class="acciones">
-                        <a th:href="@{/reservas/editar/{id}(id=${reserva.id})}" class="btn btn-warning">✏️</a>
+                        <a th:href="@{/reservas/editar/{id}(id=${reserva.id})}" class="btn btn-warning">Editar</a>
                         
                         <a th:if="${reserva.estado == 'Pendiente'}" 
                            th:href="@{/reservas/confirmar/{id}(id=${reserva.id})}" 
-                           class="btn btn-success" title="Confirmar">✓</a>
+                           class="btn btn-success" title="Confirmar">Confirmar</a>
                         
                         <a th:if="${reserva.estado == 'Confirmada'}" 
                            th:href="@{/reservas/completar/{id}(id=${reserva.id})}" 
-                           class="btn btn-info" title="Completar">✔</a>
+                           class="btn btn-info" title="Completar">Completar</a>
                         
                         <a th:if="${reserva.estado != 'Cancelada' && reserva.estado != 'Completada'}" 
                            th:href="@{/reservas/cancelar/{id}(id=${reserva.id})}" 
                            class="btn btn-danger" title="Cancelar"
-                           onclick="return confirm('¿Está seguro de cancelar esta reserva?')">✗</a>
+                           onclick="return confirm('¿Está seguro de cancelar esta reserva?')">Cancelar</a>
                         
                         <a th:href="@{/reservas/eliminar/{id}(id=${reserva.id})}" 
                            class="btn btn-danger" title="Eliminar"
-                           onclick="return confirm('¿Está seguro de eliminar esta reserva?')">🗑️</a>
+                           onclick="return confirm('¿Está seguro de eliminar esta reserva?')">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

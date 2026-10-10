@@ -9,13 +9,13 @@
 <body>
     <div class="container">
         <nav class="navbar">
-            <a th:href="@{/}">🏠 Inicio</a>
-            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
-            <a th:href="@{/huespedes}">👤 Huéspedes</a>
-            <a th:href="@{/reservas}">📅 Reservas</a>
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/habitaciones}">Habitaciones</a>
+            <a th:href="@{/huespedes}">Huéspedes</a>
+            <a th:href="@{/reservas}">Reservas</a>
         </nav>
 
-        <h1 th:text="${habitacion.id != null ? '✏️ Editar Habitación' : '➕ Nueva Habitación'}">Habitación</h1>
+        <h1 th:text="${habitacion.id != null ? 'Editar Habitación' : 'Nueva Habitación'}">Habitación</h1>
 
         <form th:action="@{/habitaciones/guardar}" th:object="${habitacion}" method="post">
             <input type="hidden" th:field="*{id}">
@@ -61,8 +61,8 @@
             </div>
 
             <div style="display: flex; gap: 10px;">
-                <button type="submit" class="btn btn-success">💾 Guardar</button>
-                <a th:href="@{/habitaciones}" class="btn btn-danger">❌ Cancelar</a>
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <a th:href="@{/habitaciones}" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>
