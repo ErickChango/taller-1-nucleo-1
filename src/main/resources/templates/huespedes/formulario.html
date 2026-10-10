@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Huésped</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a th:href="@{/}">🏠 Inicio</a>
+            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
+            <a th:href="@{/huespedes}">👤 Huéspedes</a>
+            <a th:href="@{/reservas}">📅 Reservas</a>
+        </nav>
+
+        <h1 th:text="${huesped.id != null ? '✏️ Editar Huésped' : '➕ Nuevo Huésped'}">Huésped</h1>
+
+        <form th:action="@{/huespedes/guardar}" th:object="${huesped}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" th:field="*{apellido}" required>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="documento">Documento de Identidad:</label>
+                    <input type="text" id="documento" th:field="*{documento}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nacionalidad">Nacionalidad:</label>
+                    <input type="text" id="nacionalidad" th:field="*{nacionalidad}">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" th:field="*{telefono}" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" th:field="*{direccion}">
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn btn-success">💾 Guardar</button>
+                <a th:href="@{/huespedes}" class="btn btn-danger">❌ Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

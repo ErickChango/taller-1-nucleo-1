@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Huéspedes</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a th:href="@{/}">🏠 Inicio</a>
+            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
+            <a th:href="@{/huespedes}">👤 Huéspedes</a>
+            <a th:href="@{/reservas}">📅 Reservas</a>
+        </nav>
+
+        <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+
+        <h1>👤 Gestión de Huéspedes</h1>
+        
+        <div style="margin-bottom: 20px;">
+            <a th:href="@{/huespedes/nuevo}" class="btn btn-primary">➕ Nuevo Huésped</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Nacionalidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="huesped : ${huespedes}">
+                    <td th:text="${huesped.nombreCompleto}">Juan Pérez</td>
+                    <td th:text="${huesped.documento}">12345678</td>
+                    <td th:text="${huesped.email}">email@example.com</td>
+                    <td th:text="${huesped.telefono}">555-1234</td>
+                    <td th:text="${huesped.nacionalidad}">Mexicana</td>
+                    <td class="acciones">
+                        <a th:href="@{/huespedes/editar/{id}(id=${huesped.id})}" class="btn btn-warning">✏️ Editar</a>
+                        <a th:href="@{/huespedes/eliminar/{id}(id=${huesped.id})}" 
+                           class="btn btn-danger"
+                           onclick="return confirm('¿Está seguro de eliminar este huésped?')">🗑️ Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.isEmpty(huespedes)}" style="text-align: center; padding: 40px; color: #999;">
+            <p>No hay huéspedes registrados</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Hotelera</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a th:href="@{/}">🏠 Inicio</a>
+            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
+            <a th:href="@{/huespedes}">👤 Huéspedes</a>
+            <a th:href="@{/reservas}">📅 Reservas</a>
+        </nav>
+
+        <div class="content">
+            <h1>Sistema de Gestión de Hotel</h1>
+            <p style="color: #64748b; margin-bottom: 30px;">Panel de administración y estadísticas</p>
+
+            <div class="dashboard">
+                <div class="card">
+                    <h3>Total Habitaciones</h3>
+                    <div class="numero" th:text="${totalHabitaciones}">0</div>
+                </div>
+
+                <div class="card">
+                    <h3>Habitaciones Disponibles</h3>
+                    <div class="numero" th:text="${habitacionesDisponibles}">0</div>
+                </div>
+
+                <div class="card">
+                    <h3>Total Huéspedes</h3>
+                    <div class="numero" th:text="${totalHuespedes}">0</div>
+                </div>
+
+                <div class="card">
+                    <h3>Total Reservas</h3>
+                    <div class="numero" th:text="${totalReservas}">0</div>
+                </div>
+
+                <div class="card" style="grid-column: span 2;">
+                    <h3>Ingresos Acumulados</h3>
+                    <div class="numero">$<span th:text="${#numbers.formatDecimal(ingresoTotal, 0, 'COMMA', 2, 'POINT')}">0.00</span></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <h2>Acciones Rápidas</h2>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                    <a th:href="@{/reservas/nuevo}" class="btn btn-primary">➕ Nueva Reserva</a>
+                    <a th:href="@{/habitaciones/nuevo}" class="btn btn-success">🛏️ Nueva Habitación</a>
+                    <a th:href="@{/huespedes/nuevo}" class="btn btn-info">👤 Nuevo Huésped</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

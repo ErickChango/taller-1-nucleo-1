@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Reserva</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a th:href="@{/}">🏠 Inicio</a>
+            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
+            <a th:href="@{/huespedes}">👤 Huéspedes</a>
+            <a th:href="@{/reservas}">📅 Reservas</a>
+        </nav>
+
+        <h1 th:text="${reserva.id != null ? '✏️ Editar Reserva' : '➕ Nueva Reserva'}">Reserva</h1>
+
+        <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <label for="huesped">Huésped:</label>
+                <select id="huesped" th:field="*{huesped.id}" required>
+                    <option value="">Seleccione un huésped</option>
+                    <option th:each="h : ${huespedes}" 
+                            th:value="${h.id}" 
+                            th:text="${h.nombreCompleto + ' - ' + h.documento}">Huésped</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="habitacion">Habitación:</label>
+                <select id="habitacion" th:field="*{habitacion.id}" required>
+                    <option value="">Seleccione una habitación</option>
+                    <option th:each="hab : ${habitaciones}" 
+                            th:value="${hab.id}" 
+                            th:text="${'Hab. ' + hab.numeroHabitacion + ' - ' + hab.tipo + ' ($' + hab.precioPorNoche + '/noche)'}">Habitación</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="fechaEntrada">Fecha de Entrada (Check-in):</label>
+                    <input type="date" id="fechaEntrada" th:field="*{fechaEntrada}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaSalida">Fecha de Salida (Check-out):</label>
+                    <input type="date" id="fechaSalida" th:field="*{fechaSalida}" required>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label for="numeroPersonas">Número de Personas:</label>
+                    <input type="number" id="numeroPersonas" th:field="*{numeroPersonas}" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" th:field="*{estado}">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Confirmada">Confirmada</option>
+                        <option value="Cancelada">Cancelada</option>
+                        <option value="Completada">Completada</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="observaciones">Observaciones:</label>
+                <textarea id="observaciones" th:field="*{observaciones}" rows="4"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn btn-success">💾 Guardar Reserva</button>
+                <a th:href="@{/reservas}" class="btn btn-danger">❌ Cancelar</a>
+            </div>
+        </form>
+
+        <script>
+            document.getElementById('fechaSalida').addEventListener('change', function() {
+                const fechaEntrada = document.getElementById('fechaEntrada').value;
+                const fechaSalida = this.value;
+                
+                if (fechaEntrada && fechaSalida && fechaSalida <= fechaEntrada) {
+                    alert('La fecha de salida debe ser posterior a la fecha de entrada');
+                    this.value = '';
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

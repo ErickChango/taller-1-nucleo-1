@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Reservas</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a th:href="@{/}">🏠 Inicio</a>
+            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
+            <a th:href="@{/huespedes}">👤 Huéspedes</a>
+            <a th:href="@{/reservas}">📅 Reservas</a>
+        </nav>
+
+        <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <h1>📅 Gestión de Reservas</h1>
+        
+        <div style="margin-bottom: 20px;">
+            <a th:href="@{/reservas/nuevo}" class="btn btn-primary">➕ Nueva Reserva</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Huésped</th>
+                    <th>Habitación</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Días</th>
+                    <th>Personas</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="reserva : ${reservas}">
+                    <td th:text="${reserva.huesped.nombreCompleto}">Juan Pérez</td>
+                    <td th:text="${reserva.habitacion.numeroHabitacion}">101</td>
+                    <td th:text="${#temporals.format(reserva.fechaEntrada, 'dd/MM/yyyy')}">01/01/2024</td>
+                    <td th:text="${#temporals.format(reserva.fechaSalida, 'dd/MM/yyyy')}">05/01/2024</td>
+                    <td th:text="${reserva.numeroDias}">4</td>
+                    <td th:text="${reserva.numeroPersonas}">2</td>
+                    <td>$<span th:text="${#numbers.formatDecimal(reserva.montoTotal, 0, 'COMMA', 2, 'POINT')}">0.00</span></td>
+                    <td>
+                        <span th:class="'badge badge-' + ${#strings.toLowerCase(reserva.estado)}" th:text="${reserva.estado}">Estado</span>
+                    </td>
+                    <td class="acciones">
+                        <a th:href="@{/reservas/editar/{id}(id=${reserva.id})}" class="btn btn-warning">✏️</a>
+                        
+                        <a th:if="${reserva.estado == 'Pendiente'}" 
+                           th:href="@{/reservas/confirmar/{id}(id=${reserva.id})}" 
+                           class="btn btn-success" title="Confirmar">✓</a>
+                        
+                        <a th:if="${reserva.estado == 'Confirmada'}" 
+                           th:href="@{/reservas/completar/{id}(id=${reserva.id})}" 
+                           class="btn btn-info" title="Completar">✔</a>
+                        
+                        <a th:if="${reserva.estado != 'Cancelada' && reserva.estado != 'Completada'}" 
+                           th:href="@{/reservas/cancelar/{id}(id=${reserva.id})}" 
+                           class="btn btn-danger" title="Cancelar"
+                           onclick="return confirm('¿Está seguro de cancelar esta reserva?')">✗</a>
+                        
+                        <a th:href="@{/reservas/eliminar/{id}(id=${reserva.id})}" 
+                           class="btn btn-danger" title="Eliminar"
+                           onclick="return confirm('¿Está seguro de eliminar esta reserva?')">🗑️</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.isEmpty(reservas)}" style="text-align: center; padding: 40px; color: #999;">
+            <p>No hay reservas registradas</p>
+        </div>
+    </div>
+</body>
+</html>

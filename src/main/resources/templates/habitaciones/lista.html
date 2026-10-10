@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Habitaciones</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a th:href="@{/}">🏠 Inicio</a>
+            <a th:href="@{/habitaciones}">🛏️ Habitaciones</a>
+            <a th:href="@{/huespedes}">👤 Huéspedes</a>
+            <a th:href="@{/reservas}">📅 Reservas</a>
+        </nav>
+
+        <div class="content">
+            <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+
+            <h1>Gestión de Habitaciones</h1>
+            
+            <div style="margin-bottom: 24px;">
+                <a th:href="@{/habitaciones/nuevo}" class="btn btn-primary">➕ Nueva Habitación</a>
+            </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Tipo</th>
+                    <th>Capacidad</th>
+                    <th>Precio/Noche</th>
+                    <th>Estado</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="habitacion : ${habitaciones}">
+                    <td th:text="${habitacion.numeroHabitacion}">101</td>
+                    <td th:text="${habitacion.tipo}">Doble</td>
+                    <td th:text="${habitacion.capacidad}">2</td>
+                    <td>$<span th:text="${#numbers.formatDecimal(habitacion.precioPorNoche, 0, 'COMMA', 2, 'POINT')}">0.00</span></td>
+                    <td>
+                        <span th:if="${habitacion.disponible}" class="disponible">✓ Disponible</span>
+                        <span th:unless="${habitacion.disponible}" class="no-disponible">✗ Ocupada</span>
+                    </td>
+                    <td th:text="${habitacion.descripcion}">Descripción</td>
+                    <td class="acciones">
+                        <a th:href="@{/habitaciones/editar/{id}(id=${habitacion.id})}" class="btn btn-warning">✏️ Editar</a>
+                        <a th:href="@{/habitaciones/eliminar/{id}(id=${habitacion.id})}" 
+                           class="btn btn-danger"
+                           onclick="return confirm('¿Está seguro de eliminar esta habitación?')">🗑️ Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.isEmpty(habitaciones)}" style="text-align: center; padding: 40px; color: #94a3b8;">
+            <p>No hay habitaciones registradas</p>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
